@@ -1,0 +1,26 @@
+<idea-plugin>
+  <id>pl.kpiska.jsondiff</id>
+  <name>jsondiff</name>
+  <version>0.1</version>
+  <vendor email="kamil.piska@gmail.com" url="https://github.com/kpiska/jsondiff">https://github.com/kpiska/jsondiff</vendor>
+
+  <description><![CDATA[
+      Compare two json files (.json extension) regardless of the order of fields.
+    ]]></description>
+
+  <change-notes><![CDATA[
+      0.1 First version od plugin
+    ]]>
+  </change-notes>
+
+  <idea-version since-build="171.0"/>
+
+  <extensions defaultExtensionNs="com.intellij" />
+
+  <actions>
+      <action id="pl.kpiska.jsondiff.JsonDiffAction" class="pl.kpiska.jsondiff.JsonDiffAction" text="Compare json">
+          <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CompareTwoFiles"/>
+      </action>
+  </actions>
+
+</idea-plugin>
