@@ -18,6 +18,7 @@ package pl.kpiska.jsondiff;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import com.intellij.diff.actions.CompareFilesAction;
 import com.intellij.diff.contents.DiffContent;
 import com.intellij.diff.contents.DocumentContentImpl;
@@ -79,7 +80,6 @@ public class JsonDiffAction extends CompareFilesAction {
       if (!data[0].isValid()) {
         return new ErrorDiffRequest("Problem with first JSON file"); // getOtherFile() shows dialog that can invalidate this file
       }
-
     } else {
       right = data[1];
     }
@@ -87,6 +87,7 @@ public class JsonDiffAction extends CompareFilesAction {
     try {
       return new SimpleDiffRequest(mainTitle(left, right), content(left), content(right), contentTitle(left), contentTitle(right));
     } catch (IOException | RuntimeException exception) {
+      exception.printStackTrace();
       return new ErrorDiffRequest("Problem with some of JSON files");
     }
   }
@@ -94,14 +95,13 @@ public class JsonDiffAction extends CompareFilesAction {
   private Map<String, Object> deepSort(Map<?, ?> map) {
     ImmutableSortedMap.Builder<String, Object> builder = ImmutableSortedMap.naturalOrder();
 
-    ImmutableSortedMap.copyOf(map).forEach((k, v) -> {
+    map.forEach((k, v) -> {
       if (v instanceof Map) {
         builder.put((String) k, deepSort((Map) v));
       } else {
-        builder.put((String) k, v);
+        builder.put((String) k, v == null ? JsonNull.INSTANCE : v);
       }
     });
-
     return builder.build();
   }
 
@@ -110,8 +110,7 @@ public class JsonDiffAction extends CompareFilesAction {
       new String(file.contentsToByteArray(), file.getCharset()),
       new ParameterizedTypeImpl(Map.class, String.class, Object.class)
     ));
-    String prettyJsonString = new GsonBuilder().setPrettyPrinting().create().toJson(sortedJsonMap);
-
+    String prettyJsonString = new GsonBuilder().setPrettyPrinting().serializeNulls().create().toJson(sortedJsonMap);
     return new DocumentContentImpl(new DocumentImpl(prettyJsonString));
   }
 

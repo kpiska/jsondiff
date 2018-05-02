@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>pl.kpiska.jsondiff</id>
   <name>jsondiff</name>
-  <version>0.1</version>
+  <version>0.2</version>
   <vendor email="kamil.piska@gmail.com" url="https://github.com/kpiska/jsondiff">https://github.com/kpiska/jsondiff</vendor>
 
   <description><![CDATA[
@@ -9,6 +9,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.2 Handle JSON null values
       0.1 First version od plugin
     ]]>
   </change-notes>
