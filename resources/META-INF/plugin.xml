@@ -9,8 +9,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      0.2 Handle JSON null values
-      0.1 First version od plugin
+      0.2 Handle JSON null values, npe when pick directory fix
+      0.1 First version of plugin
     ]]>
   </change-notes>
 
