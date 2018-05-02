@@ -97,6 +97,18 @@ public class JsonDiffActionTest extends LightPlatformCodeInsightFixtureTestCase 
     assertFalse(available);
   }
 
+  public void testShouldActionBeNotAvailableWhenDirectoryWithJsonExtension() {
+    // given
+    JsonDiffAction action = new JsonDiffAction();
+    AnActionEvent event = eventWithFiles(action, "directory.json", "valid2.JSON");
+
+    // when
+    boolean available = action.isAvailable(event);
+
+    // then
+    assertFalse(available);
+  }
+
   public void testShouldJsonWithDifferentFieldsOrderBeEqual() {
     // given
     JsonDiffAction action = new JsonDiffAction();
